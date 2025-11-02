@@ -1,0 +1,14 @@
+Aim: To understand MATLAB software interface and functionality
+
+---
+
+% Given values
+a = 10;
+x = 10;
+y = 20;
+
+% Expression
+z = exp(-a) * sin(x) + 10 * sqrt(y);
+
+% Display result
+disp(['The value of z is: ', num2str(z)]);
