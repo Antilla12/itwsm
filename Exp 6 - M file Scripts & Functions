@@ -1,0 +1,163 @@
+Aim: To understand and implement M-File scripts and functions in MATLAB
+
+---
+
+clc;
+clear;
+close all;
+
+% Define the range of x
+x = -10:0.1:10;
+
+% Generate the signum function
+y = sign(x);
+
+% Plot the function
+plot(x, y, 'b', 'LineWidth', 2);
+xlabel('x');
+ylabel('sign(x)');
+title('Signum Function');
+grid on;
+axis([-10 10 -1.5 1.5]);
+
+% Display a horizontal line at y=0 for reference
+hold on;
+yline(0, 'k--');
+
+---
+
+clc;
+clear;
+close all;
+
+% Define time range
+t = 0:0.1:10;
+
+% Define exponential growth rate
+a = 0.3;   % Growth constant
+
+% Generate exponential growing signal
+x = exp(a * t);
+
+% Plot the signal
+plot(t, x, 'r', 'LineWidth', 2);
+xlabel('Time (t)');
+ylabel('Amplitude');
+title('Exponential Growing Signal');
+grid on;
+
+---
+
+clc;
+clear;
+close all;
+
+% Define time range
+t = 0:0.1:10;
+
+% Define exponential decay rate
+a = 0.3;   % Decay constant
+
+% Generate exponential decaying signal
+x = exp(-a * t);
+
+% Plot the signal
+plot(t, x, 'b', 'LineWidth', 2);
+xlabel('Time (t)');
+ylabel('Amplitude');
+title('Exponential Decaying Signal');
+grid on;
+
+---
+
+clc;
+clear;
+close all;
+
+% Define time range
+t = 0:0.001:1;
+
+% Define parameters of the two sine waves
+f1 = 5;          % Frequency of first signal (Hz)
+f2 = 10;         % Frequency of second signal (Hz)
+A1 = 2;          % Amplitude of first signal
+A2 = 1.5;        % Amplitude of second signal
+
+% Generate two sinusoidal signals
+x1 = A1 * sin(2*pi*f1*t);
+x2 = A2 * sin(2*pi*f2*t);
+
+% Subtraction of signals
+x_sub = x1 - x2;
+
+% Multiplication of signals
+x_mul = x1 .* x2;
+
+% Plot the results
+figure;
+
+subplot(3,1,1);
+plot(t, x1, 'b', t, x2, 'r', 'LineWidth', 1.5);
+title('Original Sinusoidal Signals');
+xlabel('Time (s)');
+ylabel('Amplitude');
+legend('x1(t)', 'x2(t)');
+grid on;
+
+subplot(3,1,2);
+plot(t, x_sub, 'm', 'LineWidth', 1.5);
+title('Subtraction: x1(t) - x2(t)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+grid on;
+
+subplot(3,1,3);
+plot(t, x_mul, 'g', 'LineWidth', 1.5);
+title('Multiplication: x1(t) * x2(t)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+grid on;
+
+---
+
+% Save this part as a separate file named FtoC.m in your MATLAB working directory:
+
+function C = FtoC(F)
+% FtoC  Converts temperature from Fahrenheit to Celsius
+% Usage: C = FtoC(F)
+
+C = (F - 32) * (5/9);
+end
+
+
+% Now, create another M-file (for example: Change_in_Area.m) with this code:
+
+clc;
+clear;
+close all;
+
+% Given data
+alpha = 23e-6;        % Coefficient of thermal expansion (1/°C)
+L1 = 4.5;             % Length in meters
+L2 = 2.25;            % Width in meters
+T1_F = 400;           % Initial temperature in °F
+T2_F = 920;           % Final temperature in °F
+
+% Convert temperatures to Celsius using user-defined function
+T1_C = FtoC(T1_F);
+T2_C = FtoC(T2_F);
+
+% Temperature change
+dT = T2_C - T1_C;
+
+% Original area
+A = L1 * L2;
+
+% Change in area (for small changes, ΔA = 2 * α * A * ΔT)
+dA = 2 * alpha * A * dT;
+
+% Display results
+fprintf('Initial Temperature (°C): %.2f\n', T1_C);
+fprintf('Final Temperature (°C): %.2f\n', T2_C);
+fprintf('Temperature Change (ΔT): %.2f °C\n', dT);
+fprintf('Change in Area (ΔA): %.6f m^2\n', dA);
