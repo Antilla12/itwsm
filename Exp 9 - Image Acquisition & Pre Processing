@@ -1,0 +1,73 @@
+Aim: To study and implement image acquisition and pre-processing techniques in MATLAB.
+
+---
+
+img = imread('peppers.png');
+imshow(img);
+title('Original RGB Image');
+
+gray_img = rgb2gray(img);
+hsv_img = rgb2hsv(img);
+
+figure;
+subplot(1,2,1);
+imshow(gray_img);
+title('Grayscale Image');
+subplot(1,2,2);
+imshow(hsv_img);
+title('HSV Image');
+
+resized_img = imresize(img, 0.5);
+cropped_img = imcrop(img, [50 50 150 150]);
+
+figure;
+subplot(1,2,1);
+imshow(resized_img);
+title('Resized Image');
+subplot(1,2,2);
+imshow(cropped_img);
+title('Cropped Image');
+
+gray_crop = rgb2gray(cropped_img);
+normalized_img = mat2gray(gray_crop);
+
+figure;
+imshow(normalized_img);
+title('Normalized Grayscale Image');
+
+---
+
+img = imread('YOUR OWN IMAGE.png');
+gray_img = rgb2gray(img);
+hsv_img = rgb2hsv(img);
+
+subplot(1,2,1); imshow(gray_img); title('Grayscale');
+subplot(1,2,2); imshow(hsv_img); title('HSV');
+
+% Resize (double size)
+resized_img = imresize(img, 2);
+figure;
+subplot(1,2,1); imshow(img); title('Original');
+subplot(1,2,2); imshow(resized_img); title('Resized');
+
+% Auto-detect bright region (text/logo)
+bw = imbinarize(gray_img, 'adaptive');
+bw = imcomplement(bw);          % focus on bright text region
+bw = bwareafilt(bw, 1);         % keep largest region
+
+stats = regionprops(bw, 'BoundingBox');
+if ~isempty(stats)
+    cropped_img = imcrop(img, stats(1).BoundingBox);
+    figure; imshow(cropped_img); title('Auto-Detected Bright Region');
+else
+    disp('No bright region detected.');
+    cropped_img = img;
+end
+
+% Normalize cropped region
+gray_crop = rgb2gray(cropped_img);
+normalized_img = mat2gray(gray_crop);
+
+figure; imshow(normalized_img); title('Normalized Image');
+disp(['Min intensity: ', num2str(min(normalized_img(:)))]);
+disp(['Max intensity: ', num2str(max(normalized_img(:)))]);
