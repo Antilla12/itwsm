@@ -1,0 +1,727 @@
+Aim: To understand the debugging process in MATLAB by practicing with M-files containing intentional errors, using breakpoints, examining variable values, correcting mistakes
+
+--- 1.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Calculate sum of first 10 integers
+%     sum = 0
+%     for i = 1:10
+%         sum = sum + i
+%     end
+%     disp(['Sum = '
+%     , num2str(sum)]);
+
+% Incorrect Code (will produce errors or warnings)
+
+disp('--- Running Incorrect Code ---')
+try
+    sum = 0
+    for i = 1:10
+        sum = sum + i
+    end
+    disp(['Sum = '
+    , num2str(sum)]);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of Errors:
+% 1. Missing semicolons at the end of statements cause unwanted output.
+% 2. The 'disp' statement is split across two lines, producing a syntax error.
+% 3. Using the variable name 'sum' overrides MATLAB's built-in function 'sum()'.
+
+% Corrected Code
+
+disp('--- Running Corrected Code ---')
+total = 0;                     % Initialize the variable
+for i = 1:10                   % Loop from 1 to 10
+    total = total + i;         % Add each value of i
+end
+disp(['Sum = ', num2str(total)]);   % Display result properly
+
+% Expected Output:
+% Sum = 55
+
+--- 2. 
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Area of a rectangle
+%     length = 5;
+%     area = length * width;
+%     disp(['Area = '
+%     , num2str(area)]);
+
+% Incorrect Code (will produce errors)
+
+disp('--- Running Incorrect Code ---')
+try
+    length = 5;
+    area = length * width;
+    disp(['Area = '
+    , num2str(area)]);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of Errors:
+% 1. The variable 'width' is used but never defined, which causes an "undefined variable" error.
+% 2. The 'disp' statement is split across two lines, creating a syntax issue.
+% 3. The variable name 'length' overrides MATLAB's built-in function 'length()'.
+
+% Corrected Code
+
+disp('--- Running Corrected Code ---')
+rect_length = 5;        % Renamed to avoid conflict with built-in function
+width = 3;              % Defined width
+area = rect_length * width;
+disp(['Area = ', num2str(area)]);  % Display result properly
+
+% Expected Output:
+% Area = 15
+
+--- 3. 
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Average of numbers
+%     x = [10 20 30 40];
+%     avg = sum(x) / length(x)^2;
+%     disp(['Average = '
+%     , num2str(avg)]);
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+x = [10 20 30 40];
+avg = sum(x) / length(x)^2;
+disp(['Average = '
+, num2str(avg)]);
+
+% Explanation of error:
+% 1. The formula for average is incorrect.
+%    It should be sum(x)/length(x), not sum(x)/length(x)^2.
+% 2. The disp statement is split across two lines, which can cause syntax issues.
+
+% Corrected code
+clear;
+clc;
+disp('--- Running Corrected Code ---')
+x = [10 20 30 40];
+avg = sum(x) / length(x);
+disp(['Average = ', num2str(avg)]);
+
+% Expected Output:
+% Average = 25
+
+--- 4. 
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Division operation
+%     a = 10; b = 0;
+%     c = a / b;
+%     disp(['Result = '
+%     , num2str(c)]);
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+a = 10; 
+b = 0;
+c = a / b;
+disp(['Result = '
+, num2str(c)]);
+
+% Explanation of error:
+% 1. Division by zero is mathematically undefined. MATLAB does not throw an error,
+%    but it returns "Inf" (infinity) as the result.
+% 2. The disp statement is split across two lines, which can create syntax problems.
+
+% Corrected code
+disp('--- Running Corrected Code ---')
+a = 10; 
+b = 2;                     % Changed denominator to a nonzero value
+c = a / b;                 
+disp(['Result = ', num2str(c)]);
+
+% Expected Output:
+% Result = 5
+
+--- 5.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Function to compute factorial
+%     n = 5;
+%     f = factorials(n);
+%     disp(['Factorial = '
+%     , num2str(f)]);
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+try
+    n = 5;
+    f = factorials(n);
+    disp(['Factorial = '
+    , num2str(f)]);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of error:
+% 1. The function name used is 'factorials', which does not exist in MATLAB.
+%    The correct built-in function name is 'factorial' (without 's').
+% 2. The disp statement is split across two lines, which can cause syntax problems.
+
+% Corrected code
+disp('--- Running Corrected Code ---')
+n = 5;
+f = factorial(n);
+disp(['Factorial = ', num2str(f)]);
+
+% Expected Output:
+% Factorial = 120
+
+--- 6.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Access array element
+%     A = [3 5 7 9];
+%     val = A(5);
+%     disp(['Value = '
+%     , num2str(val)]);
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+try
+    A = [3 5 7 9];
+    val = A(5);
+    disp(['Value = '
+    , num2str(val)]);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of error:
+% 1. The array A has only 4 elements, indexed as A(1) to A(4).
+%    Trying to access A(5) causes an "Index exceeds array bounds" error.
+% 2. The disp statement is split across two lines, which can lead to syntax issues.
+
+% Corrected code
+disp('--- Running Corrected Code ---')
+A = [3 5 7 9];
+val = A(4);   % Changed index from 5 to 4 (valid index)
+disp(['Value = ', num2str(val)]);
+
+% Expected Output:
+% Value = 9
+
+---7.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % While loop error
+%     i = 1;
+%     while i <= 5
+%     disp(i);
+%     End
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+try
+    i = 1;
+    while i <= 5
+        disp(i);
+    End
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of error:
+% 1. MATLAB keywords are **case-sensitive**. The correct keyword is 'end', not 'End'.
+% 2. The loop variable 'i' never increments, leading to an infinite loop if corrected only for case.
+
+% Corrected code
+disp('--- Running Corrected Code ---')
+i = 1;
+while i <= 5
+    disp(i);
+    i = i + 1;   % Increment 'i' to avoid infinite loop
+end
+
+% Expected Output:
+% 1
+% 2
+% 3
+% 4
+% 5
+
+--- 8.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Temperature conversion
+%     C = 25;
+%     F = (9/5) * c + 32;
+%     disp(['Fahrenheit = '
+%     , num2str(F)]);
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+try
+    C = 25;
+    F = (9/5) * c + 32;
+    disp(['Fahrenheit = '
+    , num2str(F)]);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of error:
+% 1. MATLAB is case-sensitive — 'C' and 'c' are different variables.
+%    Since 'c' is undefined, MATLAB throws an "undefined variable" error.
+% 2. The disp statement is split across two lines, which can create syntax issues.
+
+% Corrected code
+disp('--- Running Corrected Code ---')
+C = 25;
+F = (9/5) * C + 32;     % Corrected variable name (C)
+disp(['Fahrenheit = ', num2str(F)]);
+
+% Expected Output:
+% Fahrenheit = 77
+
+--- 9. 
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Function to square a number
+%     function y = squareValue(x)
+%     % Function to square a number
+%     y = x * x + ;
+%     End
+
+% Wrong code execution (will cause syntax errors)
+disp('--- Running Incorrect Code ---')
+try
+    % The following function definition is syntactically incorrect and cannot be run inline.
+    % To simulate the error, we show what MATLAB would complain about.
+    evalc('function y = squareValue(x), y = x * x + ; End');
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of errors:
+% 1. The expression 'x * x +' is incomplete — there is a trailing '+' operator with no operand.
+% 2. MATLAB function definitions must end with lowercase 'end', not 'End'.
+% 3. This code should be saved in a separate file named 'squareValue.m' when defining a function.
+
+% Corrected code (Save this in a file named squareValue.m)
+function y = squareValue(x)
+% Function to square a number
+y = x * x;
+end
+
+% Example usage (in Command Window or another script):
+% result = squareValue(5)
+% Output:
+% result = 25
+
+--- 10.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Function to calculate rectangle area and perimeter
+%     function [area, peri] = rectangleCalc(l, w)
+%     % Function to calculate rectangle area and perimeter
+%     area = l * w
+%     peri = 2*(l + w);
+
+% Wrong code execution (contains syntax issues)
+disp('--- Running Incorrect Code ---')
+try
+    % The following would cause issues if placed in a script due to missing "end" and semicolons.
+    evalc('function [area, peri] = rectangleCalc(l, w), area = l * w, peri = 2*(l + w)');
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of errors:
+% 1. Missing semicolon (;) after area calculation — causes unwanted output.
+% 2. Missing 'end' statement to close the function.
+% 3. Function definitions must be saved in a separate file named rectangleCalc.m.
+
+% Corrected code (Save this in a file named rectangleCalc.m)
+function [area, peri] = rectangleCalc(l, w)
+% Function to calculate rectangle area and perimeter
+area = l * w;
+peri = 2 * (l + w);
+end
+
+% Example usage (in Command Window or another script):
+% [a, p] = rectangleCalc(5, 3)
+% Output:
+% a = 15
+% p = 16
+
+--- 11.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Sum of first n integers
+%     n = 10;
+%     s = 0;
+%     for i = 1:n-1
+%     s = s + i;
+%     end
+%     disp(['Sum = '
+%     , num2str(s)]);
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+n = 10;
+s = 0;
+for i = 1:n-1
+    s = s + i;
+end
+disp(['Sum = '
+, num2str(s)]);
+
+% Explanation of error:
+% 1. The loop runs from 1 to (n - 1), so the value of 'n' (10) is never added.
+% 2. The disp statement is split across two lines, which may cause formatting issues.
+
+% Corrected code
+disp('--- Running Corrected Code ---')
+n = 10;
+s = 0;
+for i = 1:n      % Corrected loop range
+    s = s + i;
+end
+disp(['Sum = ', num2str(s)]);
+
+% Expected Output:
+% Sum = 55
+
+--- 12.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Quadratic formula
+%     a = 1; b = 5; c = 6;
+%     root1 = (-b + sqrt(b^2 - 4*a*c)) / 2*a;
+%     root2 = (-b - sqrt(b^2 - 4*a*c)) / 2*a;
+%     disp([root1 root2]);
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+a = 1; b = 5; c = 6;
+root1 = (-b + sqrt(b^2 - 4*a*c)) / 2*a;
+root2 = (-b - sqrt(b^2 - 4*a*c)) / 2*a;
+disp([root1 root2]);
+
+% Explanation of error:
+% 1. MATLAB follows standard operator precedence. 
+%    The expression "(/ 2*a)" is interpreted as "(/2) * a" instead of "(/(2*a))".
+%    This produces incorrect root values.
+% 2. Correct grouping of parentheses is needed around (2*a).
+
+% Corrected code
+disp('--- Running Corrected Code ---')
+a = 1; b = 5; c = 6;
+root1 = (-b + sqrt(b^2 - 4*a*c)) / (2*a);  % Added parentheses around 2*a
+root2 = (-b - sqrt(b^2 - 4*a*c)) / (2*a);  % Same fix here
+disp(['Roots are: ', num2str(root1), ' and ', num2str(root2)]);
+
+% Expected Output:
+% Roots are: -2 and -3
+
+--- 13.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Access element in matrix
+%     M = magic(4);
+%     val = M(5,2);
+%     disp(['Value = '
+%     , num2str(val)]);
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+try
+    M = magic(4);
+    val = M(5,2);
+    disp(['Value = '
+    , num2str(val)]);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of error:
+% 1. The matrix M = magic(4) creates a 4x4 matrix (rows and columns from 1 to 4).
+%    Trying to access M(5,2) causes "Index exceeds array bounds" error since row 5 doesn’t exist.
+% 2. The disp statement is split across two lines, which can create formatting issues.
+
+% Corrected code
+disp('--- Running Corrected Code ---')
+M = magic(4);
+val = M(4,2);    % Changed row index from 5 to 4 (valid index)
+disp(['Value = ', num2str(val)]);
+
+% Expected Output:
+% Value = (depends on magic(4) matrix, usually 14)
+
+--- 14.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Calculate average of vector
+%     function avg = myAverage(x)
+%     % Calculate average of vector
+%     n = length(x);
+%     total = 0;
+%     for i = 1:n
+%     total = total + x; % Error
+%     end
+%     avg = total / n;
+%     End
+
+% Wrong code execution
+disp('--- Running Incorrect Code ---')
+try
+    avg = myAverage_wrong([10 20 30 40]);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% --- Incorrect version of the function ---
+function avg = myAverage_wrong(x)
+n = length(x);
+total = 0;
+for i = 1:n
+    total = total + x; % Error: x is a vector, not a single element
+end
+avg = total / n;
+end
+
+% Explanation of errors:
+% 1. Inside the loop, "x" should be accessed element by element as x(i),
+%    not as the whole vector x. Using x adds the entire vector repeatedly.
+% 2. MATLAB is case-sensitive. "End" should be written as "end".
+
+% --- Corrected version of the function ---
+disp('--- Running Corrected Code ---')
+x = [10 20 30 40];
+avg = myAverage(x);
+disp(['Average = ', num2str(avg)]);
+
+function avg = myAverage(x)
+n = length(x);
+total = 0;
+for i = 1:n
+    total = total + x(i);  % Corrected: access element by index
+end
+avg = total / n;
+end
+
+--- 15.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Recursive Fibonacci
+%     function f = fib(n)
+%     % Recursive Fibonacci
+%     if n == 1 || n == 2
+%         f = 1;
+%     else
+%         f = fib(n-1) + fib(n-3); % Error
+%     end
+%     end
+
+% --- Wrong code execution ---
+disp('--- Running Incorrect Code ---')
+try
+    f = fib_wrong(6);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% --- Incorrect version of the function ---
+function f = fib_wrong(n)
+if n == 1 || n == 2
+    f = 1;
+else
+    f = fib_wrong(n-1) + fib_wrong(n-3); % Error: wrong recursive index
+end
+end
+
+% Explanation of errors:
+% 1. The recursive call should be fib(n-1) + fib(n-2), not fib(n-3).
+%    Using (n-3) skips terms and gives wrong results.
+% 2. Ensure that the base case (n == 1 || n == 2) correctly handles
+%    the first two Fibonacci numbers.
+
+% --- Corrected version of the function ---
+disp('--- Running Corrected Code ---')
+n = 6;
+f = fib(n);
+disp(['Fibonacci(', num2str(n), ') = ', num2str(f)]);
+
+function f = fib(n)
+if n == 1 || n == 2
+    f = 1;
+else
+    f = fib(n-1) + fib(n-2);  % Corrected recursive relation
+end
+end
+
+--- 16.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % String concatenation with numbers
+%     age = 21;
+%     name = 'Alice';
+%     disp(['Name: ' name ' Age: ' age]);
+
+% --- Wrong code execution ---
+disp('--- Running Incorrect Code ---')
+try
+    age = 21;
+    name = 'Alice';
+    disp(['Name: ' name ' Age: ' age]); % Error
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of errors:
+% 1. MATLAB cannot concatenate a string with a numeric variable directly.
+%    You must convert the number to a string using num2str().
+% 2. Without conversion, MATLAB throws: "Error using horzcat. Dimensions of arrays being concatenated are not consistent."
+
+% --- Corrected version ---
+disp('--- Running Corrected Code ---')
+age = 21;
+name = 'Alice';
+disp(['Name: ' name ' Age: ' num2str(age)]);
+
+--- 17.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Find smallest k such that sum(1:k) > 50
+%     k = 0; s = 0;
+%     while s < 50
+%         s = s + k;
+%         k = k + 1;
+%     end
+%     disp(['k = ', num2str(k)]);
+
+% --- Wrong code execution ---
+disp('--- Running Incorrect Code ---')
+try
+    k = 0; s = 0;
+    while s < 50
+        s = s + k;  % Wrong order of operations (starts from 0)
+        k = k + 1;
+    end
+    disp(['k = ', num2str(k)]);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of error:
+% The logic error is in the order of updating variables.
+% 'k' starts at 0, so the first addition adds 0 to 's', 
+% causing an off-by-one mistake — the loop overshoots.
+% 
+% The correct logic is to increment 'k' first, then add it to the sum.
+
+% --- Corrected version ---
+disp('--- Running Corrected Code ---')
+k = 0; s = 0;
+while s <= 50
+    k = k + 1;   % increment first
+    s = s + k;   % then add to the sum
+end
+disp(['k = ', num2str(k)]);
+
+--- 18.
+
+% Question:
+% Find the errors in the following sample code and correct them with explanation.
+%
+%     % Multiplication table
+%     for i = 1:5
+%         for j = 1:5
+%             T(i,j) = i*j;
+%         end
+%     end
+%     disp(T);
+
+% --- Wrong code execution ---
+disp('--- Running Incorrect Code ---')
+try
+    for i = 1:5
+        for j = 1:5
+            T(i,j) = i*j;  % Works, but 'T' not preallocated
+        end
+    end
+    disp(T);
+catch ME
+    disp('Error Message from Incorrect Code:')
+    disp(ME.message)
+end
+
+% Explanation of issue:
+% The code runs successfully, but it's **inefficient** because
+% 'T' is not preallocated. MATLAB dynamically grows 'T' inside
+% the loop, which slows down execution for large matrices.
+%
+% Additionally, best practice is to clear the variable before use
+% to avoid using leftover data from the workspace.
+
+% --- Corrected version ---
+disp('--- Running Corrected Code ---')
+clear T   % Clear previous data
+T = zeros(5,5);  % Preallocate for efficiency
+
+for i = 1:5
+    for j = 1:5
+        T(i,j) = i * j;
+    end
+end
+
+disp('Multiplication Table (5x5):')
+disp(T);
