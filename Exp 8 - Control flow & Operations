@@ -1,0 +1,266 @@
+Aim: To implement control flow statements and operators in MATLAB
+
+--- 2.
+
+T = [58 73 73 53 50 48 56 73 73 66 69 63 74 82 84 91 93 89 91 80 59 69 56 64 63 66 64 74 63 69];
+
+% (a) Number of days temperature was above 75
+days_above_75 = sum(T > 75);
+
+% (b) Number of days temperature was between 65 and 80
+days_between_65_80 = sum(T >= 65 & T <= 80);
+
+% (c) Days of the month when temperature was between 50 and 60
+days_between_50_60 = find(T >= 50 & T <= 60);
+
+disp(['(a) Days above 75°F: ' num2str(days_above_75)]);
+disp(['(b) Days between 65°F and 80°F: ' num2str(days_between_65_80)]);
+disp('(c) Days (indices) between 50°F and 60°F:');
+disp(days_between_50_60);
+
+--- 3.
+
+hours = input('Enter number of hours worked: ');
+wage = input('Enter hourly wage: ');
+
+if hours <= 40
+    pay = hours * wage;
+else
+    pay = 40 * wage + (hours - 40) * 1.5 * wage;
+end
+
+disp(['Total pay = Rs. ' num2str(pay)]);
+
+--- 4.
+
+n = input('Enter number of rows (n): ');
+m = input('Enter number of columns (m): ');
+
+A = zeros(n, m);
+
+% First row = column number
+A(1, :) = 1:m;
+
+% First column = row number
+A(:, 1) = (1:n)';
+
+% Fill the rest of the matrix
+for i = 2:n
+    for j = 2:m
+        A(i, j) = A(i-1, j) + A(i, j-1);
+    end
+end
+
+disp('Generated Matrix:');
+disp(A);
+
+--- 5.
+
+% Initial values
+balance = 300000;       % initial deposit ($)
+interest = 0.05;        % 5% annual interest
+withdraw = 25000;       % first withdrawal ($)
+inflation = 0.02;       % 2% inflation
+year = 0;
+
+% Initialize arrays for plotting
+balance_history = balance;
+withdraw_history = 0;
+
+% Simulation
+while balance > 0
+    year = year + 1;
+    % Add yearly interest
+    balance = balance * (1 + interest);
+    % Withdraw amount
+    balance = balance - withdraw;
+
+    if balance < 0
+        break;
+    end
+
+    % Store data
+    balance_history(end+1) = balance;
+    withdraw_history(end+1) = withdraw;
+
+    % Increase withdrawal by inflation rate
+    withdraw = withdraw * (1 + inflation);
+end
+
+% Display results
+fprintf('The money will last for approximately %d years.\n', year);
+
+% Plot results
+years = 1:year;
+figure;
+yyaxis left
+plot(years, withdraw_history, '-o', 'LineWidth', 1.5);
+ylabel('Yearly Withdrawal ($)');
+
+yyaxis right
+plot(years, balance_history(2:end), '-s', 'LineWidth', 1.5);
+ylabel('Account Balance ($)');
+
+xlabel('Year');
+title('Retirement Account Balance and Withdrawals Over Time');
+legend('Withdrawals', 'Balance');
+grid on;
+
+--- 6.
+
+% Ask user for matrix size
+n = input('Enter number of rows: ');
+m = input('Enter number of columns: ');
+
+% Initialize matrix
+A = zeros(n, m);
+
+% Generate matrix using loops
+for i = 1:n
+    for j = 1:m
+        A(i, j) = (i + j) / (j^2);
+    end
+end
+
+% Display result
+disp('Generated Matrix:');
+disp(A);
+
+--- 7.
+
+n = 1;
+
+while true
+    if mod(n, 2) ~= 0 && mod(n, 11) == 0 && sqrt(n) > 132
+        disp(['The required number is: ' num2str(n)]);
+        break;
+    end
+    n = n + 1;
+end
+
+--- 8.
+
+% Rearrange elements of a vector from smallest to largest (without sort)
+
+x = [-3.5 5 -6.2 11.1 0 7 -9.5 2 15 -1 3 2.5];
+n = length(x);
+
+for i = 1:n-1
+    for j = i+1:n
+        if x(j) < x(i)
+            temp = x(i);
+            x(i) = x(j);
+            x(j) = temp;
+        end
+    end
+end
+
+fprintf('Vector rearranged from smallest to largest:\n');
+disp(x);
+
+--- 9.
+
+% Calculate average of top 8 exam scores
+
+scores = [73, 91, 37, 81, 63, 66, 50, 90, 75, 43, 88, 80, 79, 69, 26, 82, 89, 99, 71, 59];
+
+% Sort scores in descending order
+for i = 1:length(scores)-1
+    for j = i+1:length(scores)
+        if scores(j) > scores(i)
+            temp = scores(i);
+            scores(i) = scores(j);
+            scores(j) = temp;
+        end
+    end
+end
+
+% Take top 8 scores
+top8 = scores(1:8);
+
+% Calculate average
+avg_top8 = mean(top8);
+
+fprintf('Top 8 scores are:\n');
+disp(top8);
+
+fprintf('Average of top 8 scores = %.2f\n', avg_top8);
+
+--- 10.
+
+% Program to find the center and radius of a circle passing through 3 points
+
+% Given points
+x1 = 13; y1 = 15;
+x2 = 4;  y2 = 18;
+x3 = 19; y3 = 3;
+
+% Compute the determinants for solving circle equation
+A = 2 * [x2 - x1, y2 - y1;
+         x3 - x1, y3 - y1];
+B = [x2^2 + y2^2 - x1^2 - y1^2;
+     x3^2 + y3^2 - x1^2 - y1^2];
+
+% Solve for center (h, k)
+center = A \ B;
+h = center(1);
+k = center(2);
+
+% Calculate radius
+r = sqrt((x1 - h)^2 + (y1 - k)^2);
+
+% Display results
+fprintf('Center of the circle: (%.2f, %.2f)\n', h, k);
+fprintf('Radius of the circle: %.2f\n', r);
+
+% Plot circle and points
+theta = linspace(0, 2*pi, 200);
+x_circle = h + r * cos(theta);
+y_circle = k + r * sin(theta);
+
+figure;
+plot(x_circle, y_circle, 'b-', 'LineWidth', 1.5); hold on;
+plot([x1 x2 x3], [y1 y2 y3], 'r*', 'MarkerSize', 10);
+plot(h, k, 'ko', 'MarkerFaceColor', 'k');
+axis equal;
+grid on;
+title('Circle Passing Through Three Points');
+xlabel('X-axis');
+ylabel('Y-axis');
+legend('Circle', 'Given Points', 'Center');
+
+--- 11.
+
+% Program to find n such that sum(1:n) is between 100 and 1000 
+% and has three identical digits
+
+n = 1;
+s = 0;
+
+while s < 1000
+    s = n * (n + 1) / 2; % sum of first n natural numbers
+    if s >= 100 && s <= 999
+        digits = num2str(s);
+        if length(digits) == 3 && digits(1) == digits(2) && digits(2) == digits(3)
+            fprintf('n = %d\n', n);
+            fprintf('Sum = %d\n', s);
+            break;
+        end
+    end
+    n = n + 1;
+end
+
+--- 12.
+
+% Program to find all twin primes between 10 and 500
+
+twin_primes = []; % Initialize an empty matrix
+
+for n = 10:500
+    if isprime(n) && isprime(n + 2)
+        twin_primes = [twin_primes; n, n + 2]; % Add as a row pair
+    end
+end
+
+disp('Twin primes between 10 and 500:')
+disp(twin_primes)
