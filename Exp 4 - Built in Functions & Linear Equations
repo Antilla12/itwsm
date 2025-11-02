@@ -1,0 +1,48 @@
+Aim: To write a MATLAB program to perform built in functions and solving linear equations
+
+---
+
+clear;
+clc;
+
+% Define the coefficient matrix A
+A = [4, -2, 6;
+     2, 8, 2;
+     6, 10, 3];
+
+% Define the constant vector B
+B = [8;
+     4;
+     0];
+
+% Solve for X = [x; y; z] using matrix left division (A \ B)
+X = A \ B;
+
+disp('Solution:');
+disp(['x = ', num2str(X(1))]);
+disp(['y = ', num2str(X(2))]);
+disp(['z = ', num2str(X(3))]);
+
+
+clear;
+clc;
+
+% Define vectors
+u_vec = [-3, 8, -2];
+v_vec = [6.5, -5, -4];
+
+% (a) Element-by-element calculation and sum
+dot_a = sum(u_vec .* v_vec);
+
+% (b) Matrix multiplication (row vector * column vector)
+u_row = u_vec;
+v_col = v_vec';
+dot_b = u_row * v_col;
+
+% (c) Built-in dot function
+dot_c = dot(u_vec, v_vec);
+
+disp('Dot Product Results:');
+disp(['(a) Element-wise sum: ', num2str(dot_a)]);
+disp(['(b) Matrix multiplication: ', num2str(dot_b)]);
+disp(['(c) Built-in dot function: ', num2str(dot_c)]);
