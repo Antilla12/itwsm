@@ -1,0 +1,62 @@
+Aim: Working with Variables, Error Handling, Workspace Management, and Miscellaneous Commands in MATLAB
+
+---
+
+% 1. Creating and Overwriting Variables
+
+% Create variables
+a = 10;
+b = 20;
+
+% Overwrite 'a' with a new value
+a = 15;
+
+% Display results
+disp(['a = ', num2str(a)]);
+disp(['b = ', num2str(b)]);
+
+
+% 2. Error Messages and Corrections
+c = a + 
+then
+c = a + b;
+
+
+%3. Operator Precedence
+
+x = 2 + 3 * 4;
+y = (2 + 3) * 4;
+
+
+% 4. Controlling Floating-Point Display
+
+piVal = pi;
+
+format short
+piVal
+
+format long
+piVal
+
+format bank
+piVal
+
+
+% 5. Workspace Management
+
+p = 100;
+q = 200;
+
+who
+whos
+
+clear p      % clears only variable p
+who
+
+clear all    % clears everything
+who
+
+
+% 7. Entering Multiple Statements per Line
+
+a = 5; b = 10; c = a + b; disp(c)
